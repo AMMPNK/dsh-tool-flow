@@ -1,7 +1,7 @@
 {
   "name": "dsh-tool-flow",
   "version": "0.1.0",
-  "description": "Compact, collapsible turn-level tool-call flow for the DeepSeek Harness Web GUI.",
+  "description": "DeepSeek Harness Web 插件：回合级工具调用卡片与思维链/正文渲染。",
   "author": "AMMPNK",
   "type": "module",
   "main": "lib/index.js",
