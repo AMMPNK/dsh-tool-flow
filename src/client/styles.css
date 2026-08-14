@@ -1,0 +1,108 @@
+/* 同回合内非首节点的 tool-call/command 会返回 null，留空壳 flowItem，
+   它不是真正的 :empty（有 React 注释子节点），框架的 .flowItem:empty 不生效，
+   且父级 flex gap 会为其多算一份间距，顶出一行空白。这里按稳定的
+   data-chat-flow-kind 属性精确隐藏（不能用哈希过的 .flowItem 类名）。 */
+[data-chat-flow-kind="tool-call"]:not(:has(.dtf)),
+[data-chat-flow-kind="command"]:not(:has(.dtf)) { display: none; }
+
+.dtf {
+  display: flow-root;
+  margin: 8px 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, currentColor 14%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, currentColor 4%, transparent);
+}
+
+.dtf[data-running="true"] { border-color: color-mix(in srgb, #d99a31 40%, transparent); }
+.dtf[data-error="true"] { border-color: color-mix(in srgb, #d05b5b 45%, transparent); }
+
+.dtf__header,
+.dtf__row,
+.dtf__summary {
+  width: 100%;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dtf__header {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 8px 12px;
+  background: transparent;
+}
+
+.dtf__header:hover,
+.dtf__row:hover { background: color-mix(in srgb, currentColor 7%, transparent); }
+
+.dtf__chevron { width: 14px; opacity: .62; }
+.dtf__heading { min-width: 0; display: flex; align-items: baseline; gap: 9px; flex: 1; }
+.dtf__title { flex: 0 0 auto; font-size: 13px; font-weight: 600; }
+.dtf__tools { overflow: hidden; color: color-mix(in srgb, currentColor 58%, transparent); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.dtf__stats { flex: 0 0 auto; color: color-mix(in srgb, currentColor 58%, transparent); font-size: 12px; }
+
+.dtf__body {
+  max-height: 240px;
+  overflow: auto;
+  padding: 4px 7px 7px;
+  border-top: 1px solid color-mix(in srgb, currentColor 10%, transparent);
+  scrollbar-width: thin;
+}
+
+.dtf__row {
+  display: block;
+  min-height: 0;
+  margin-top: 3px;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.dtf__row:empty { display: none; }
+
+.dtf__summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 7px 8px;
+  background: transparent;
+}
+
+.dtf__native {
+  display: none;
+}
+
+.dtf__assistant { display: flex; flex-direction: column; gap: 12px; }
+.dtf__interrupted { align-self: flex-start; padding: 0 6px; border-radius: 6px; background: color-mix(in srgb, currentColor 8%, transparent); opacity: .62; font-size: 11px; line-height: 18px; }
+.dtf__reasoning { color: color-mix(in srgb, currentColor 62%, transparent); font-size: 14px; }
+.dtf__reasoningHeader { display: flex; align-items: center; gap: 8px; width: 100%; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.dtf__reasoningSummary { overflow: hidden; flex: 1; text-overflow: ellipsis; white-space: nowrap; }
+.dtf__reasoningBody { padding: 4px 0 4px 22px; white-space: pre-wrap; line-height: 1.7; }
+.dtf__embeddedTool { display: flex; align-items: flex-start; gap: 9px; width: 100%; padding: 7px 8px; border: 0; border-radius: 8px; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.dtf__embeddedTool:hover { background: color-mix(in srgb, currentColor 7%, transparent); }
+.dtf__embeddedTool .dtf__args { flex: 1; }
+
+.dtf__dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  margin-top: 5px;
+  border-radius: 50%;
+  background: #46a36a;
+}
+
+.dtf__row[data-state="running"] .dtf__dot { background: #d99a31; box-shadow: 0 0 0 3px color-mix(in srgb, #d99a31 18%, transparent); }
+.dtf__row[data-state="error"] .dtf__dot { background: #d05b5b; }
+.dtf__content { min-width: 0; flex: 1; }
+.dtf__name { display: block; font-size: 13px; font-weight: 600; }
+.dtf__args { display: block; overflow: hidden; margin-top: 1px; opacity: .58; font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; text-overflow: ellipsis; white-space: nowrap; }
+.dtf__state { flex: 0 0 auto; opacity: .55; font-size: 12px; }
+
+@media (max-width: 720px) {
+  .dtf__stats { display: none; }
+  .dtf__tools { max-width: 36vw; }
+}

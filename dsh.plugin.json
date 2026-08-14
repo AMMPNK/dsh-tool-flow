@@ -1,0 +1,12 @@
+{
+  "name": "dsh-tool-flow",
+  "description": "Compact, collapsible turn-level tool-call flow in the conversation.",
+  "version": "0.1.0",
+  "entry": {
+    "name": "dsh-tool-flow",
+    "inject": []
+  },
+  "client": {
+    "platform": "web"
+  }
+}
